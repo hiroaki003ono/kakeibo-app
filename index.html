@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>家計簿アプリ</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>家計簿アプリ</h1>
+
+        <!-- 入力フォーム -->
+        <div class="form-section">
+            <h2>収支を入力</h2>
+            <div class="form-group">
+                <label for="date">日付</label>
+                <input type="date" id="date">
+            </div>
+            <div class="form-group">
+                <label for="category">カテゴリ</label>
+                <select id="category">
+                    <option value="食費">食費</option>
+                    <option value="交通費">交通費</option>
+                    <option value="娯楽">娯楽</option>
+                    <option value="給料">給料</option>
+                    <option value="その他">その他</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="description">内容</label>
+                <input type="text" id="description" placeholder="例：スーパーで買い物">
+            </div>
+            <div class="form-group">
+                <label for="amount">金額（円）</label>
+                <input type="number" id="amount" placeholder="例：1500">
+            </div>
+            <div class="form-group">
+                <label>種別</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="type" value="expence" checked>支出</label>
+                    <label><input type="radio" name="type" value="income">収入</label>
+                </div>
+            </div>
+            <button id="addBtn">追加する</button>
+        </div>
+
+        <!-- 残高サマリー -->
+        <div class="summary-section">
+            <div class="sammary-card income">
+                <span>収入合計</span>
+                <strong id="totalIncome">¥0</strong>
+            </div>
+            <div class="sammary-card expence">
+                <span>支出合計</span>
+                <strong id="totalExpense">¥0</strong>
+            </div>
+            <div class="sammary-card balance">
+                <span>残高</span>
+                <strong id="balance">¥0</strong>
+            </div>
+        </div>
+
+        <!-- 一覧表示 -->
+        <div class="list-section">
+            <h2>収支一覧</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>日付</th>
+                        <th>カテゴリ</th>
+                        <th>内容</th>
+                        <th>金額</th>
+                        <th>削除</th>
+                    </tr>
+                </thead>
+                <tbody id="recordList">
+                    <!-- JSで動的に追加 -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+
+</html>
