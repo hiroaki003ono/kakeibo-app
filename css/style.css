@@ -42,14 +42,14 @@ h2 {
     margin-bottom: 16px;
 }
 
-.form-group label {
+.form-group > label {
     display: block;
     margin-bottom: 6px;
     font-weight: bold;
     font-size: 14px;
 }
 
-.form-group input,
+.form-group input:not([type="radio"]),
 .form-group select {
     width: 100%;
     padding: 10px;
@@ -69,6 +69,8 @@ h2 {
     align-items: center;
     gap: 6px;
     cursor: pointer;
+    white-space: nowrap;
+    margin-bottom: 0;
 }
 
 button#addBtn {
