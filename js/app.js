@@ -2,19 +2,34 @@
 let records = [];
 
 // 要素の取得
-const addBtn = document.getElementById('addBtn'); // 追加ボタン
-const recordList = document.getElementById('recordList'); // テーブルのtbody
-const totalIncomeEl = document.getElementById('totalIncome'); // 収入合計表示欄
-const totalExpenseEl = document.getElementById('totalExpense'); // 支出合計表示欄
-const balanceEl = document.getElementById('balance'); // 残高表示欄
+const addBtn            = document.getElementById('addBtn'); // 追加ボタン
+const recordList        = document.getElementById('recordList'); // テーブルのtbody
+const totalIncomeEl     = document.getElementById('totalIncome'); // 収入合計表示欄
+const totalExpenseEl    = document.getElementById('totalExpense'); // 支出合計表示欄
+const balanceEl         = document.getElementById('balance'); // 残高表示欄
+
+// ページ読み込み時にDBからデータを取得
+loadRecords();
+
+// DBからデータを取得して画面に表示する関数
+function loadRecords() {
+    fetch('php/get_records.php')
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(data) {
+            records = data;
+            render();
+        });
+}
 
 // 追加ボタンのクイックイベント
 addBtn.addEventListener('click', function() {
-    const date = document.getElementById('date').value;
-    const category = document.getElementById('category').value; 
-    const description = document.getElementById('description').value;
-    const amount = parseInt(document.getElementById('amount').value); // amountの内容をparseIntで数値として取得　parseIntなしでは文字列として取得してしまう
-    const type = document.querySelector('input[name="type"]:checked').value; // 収入と支出のどちらにチェックがついているか
+    const date          = document.getElementById('date').value;
+    const category      = document.getElementById('category').value; 
+    const description   = document.getElementById('description').value;
+    const amount        = parseInt(document.getElementById('amount').value); // amountの内容をparseIntで数値として取得　parseIntなしでは文字列として取得してしまう
+    const type          = document.querySelector('input[name="type"]:checked').value; // 収入と支出のどちらにチェックがついているか
     
     // 入力チェック
     if (!date || !description || isNaN(amount) /* 数値ではない場合にtrueを返す */|| amount <= 0) {
@@ -22,18 +37,29 @@ addBtn.addEventListener('click', function() {
         return; // ←ifの条件に当てはまると、ここで関数を終了する
     }
 
-    const record = {
-        id: Date.now(), // 1970年1月1日00:00:00からの経過ミリ秒数が返ってくる　Unixタイムは経過秒数で返ってくる
-        date,
-        category,
-        description,
-        amount,
-        type
-    };
+    // FormDataを作成してPHPに送信
+    const formData = new FormData();
+    formData.append('date', date);
+    formData.append('category', category);
+    formData.append('description', description);
+    formData.append('amount', amount);
+    formData.append('type', type);
 
-    records.push(record); // recordsにrecordを追加
-    render(); // 画面を最新のrecordsで描写し直す
-    clearForm(); // フォームの入力欄を空にする
+    fetch('php/add_record.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(function(response) {
+        return response.json();
+    })
+    .then(function(data) {
+        if (data.success) {
+            loadRecords();
+            clearForm();
+        } else {
+            alert(data.message);
+        }
+    });
 });
 
 function render() {
@@ -46,9 +72,9 @@ function render() {
 
     records.forEach(function(record) {
         if (record.type === 'income') {
-            totalIncome += record.amount;
+            totalIncome += parseInt(record.amount);
         } else {
-            totalExpense += record.amount;
+            totalExpense += parseInt(record.amount);
         }
 
         // テーブルの行を作成
@@ -58,7 +84,7 @@ function render() {
             <td>${record.category}</td>
             <td>${record.description}</td>
             <td class="${record.type === 'income' ? 'amount-income' : 'amount-expense'}">
-             ${record.type === 'income' ? '+' : '-'}¥${record.amount.toLocaleString()/*←3桁カンマ区切りで表示*/}
+             ${record.type === 'income' ? '+' : '-'}¥${parseInt(record.amount).toLocaleString()/*←3桁カンマ区切りで表示*/}
             </td>
             <td>
              <button class="delete-btn" onclick="deleteRecord(${record.id})">🗑</button>
@@ -75,10 +101,23 @@ function render() {
 
 // 削除する関数
 function deleteRecord(id) {
-    records = records.filter(function(record) {
-        return record.id !== id;
+    const formData = new FormData();
+    formData.append('id', id);
+
+    fetch('php/delete_record.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(function(response) {
+        return response.json();
+    })
+    .then(function(data) {
+        if (data.success) {
+            loadRecords();
+        } else {
+            alert(data.message);
+        }
     });
-    render();
 }
 
 // フォームをリセットする関数
