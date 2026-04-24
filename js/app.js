@@ -97,6 +97,9 @@ function render() {
     totalIncomeEl.textContent = '¥' + totalIncome.toLocaleString();
     totalExpenseEl.textContent = '¥' + totalExpense.toLocaleString();
     balanceEl.textContent = '¥' + (totalIncome - totalExpense).toLocaleString();
+
+    // グラフを更新する
+    renderCharts(records);
 }
 
 // 削除する関数
