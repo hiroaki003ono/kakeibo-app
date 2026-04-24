@@ -7,13 +7,13 @@ require_once 'db.php'; // require_onceで重複読み込みを防ぐ
 // POSTデータを取得
 $date           = $_POST['date'];
 $category       = $_POST['category'];
-$description    = $_POSt['description'];
+$description    = $_POST['description'];
 $amount         = $_POST['amount'];
 $type           = $_POST['type'];
 
 // バリデーション
 if (empty($date) || empty($description) || empty($amount) || !is_numeric($amount) || $amount <= 0) {
-    echo json_encode(['success' => false, 'message => 入力内容を確認してください']);
+    echo json_encode(['success' => false, 'message' => '入力内容を確認してください']);
     exit;
 }
 
@@ -29,5 +29,5 @@ $stmt->execute([
 ]);
 
 // 成功レスポンスを返す
-echo json_encode(['success' => true, 'massage' => '収支を追加しました']);
+echo json_encode(['success' => true, 'message' => '収支を追加しました']);
 ?>

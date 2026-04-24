@@ -14,7 +14,7 @@ loadRecords();
 // DBからデータを取得して画面に表示する関数
 function loadRecords() {
     fetch('php/get_records.php')
-        .then(function(responce) {
+        .then(function(response) {
             return response.json();
         })
         .then(function(data) {

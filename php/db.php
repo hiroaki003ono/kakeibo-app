@@ -8,7 +8,7 @@ define('DB_PORT', '8889'); // MAMPのMySQLポート番号
 
 // データベースに接続
 $pdo = new PDO(
-    'myspl:host=' . DB_HOST . ';port=' . DB_PORT . ';dbname=' . DB_NAME . ';charset=utf8mb4',
+    'mysql:host=' . DB_HOST . ';port=' . DB_PORT . ';dbname=' . DB_NAME . ';charset=utf8mb4',
     DB_USER, // ユーザー名
     DB_PASS, // パスワード
     [
