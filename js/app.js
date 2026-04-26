@@ -67,8 +67,8 @@ function render() {
     recordList.innerHTML = '';
 
     // 合計を計算
-    let totalIncome = 0;
-    let totalExpense = 0;
+    let totalIncome     = 0;
+    let totalExpense    = 0;
 
     records.forEach(function(record) {
         if (record.type === 'income') {
@@ -77,20 +77,39 @@ function render() {
             totalExpense += parseInt(record.amount);
         }
 
-        // テーブルの行を作成
         const tr = document.createElement('tr');
-        tr.innerHTML = `
-            <td>${record.date}</td>
-            <td>${record.category}</td>
-            <td>${record.description}</td>
-            <td class="${record.type === 'income' ? 'amount-income' : 'amount-expense'}">
-             ${record.type === 'income' ? '+' : '-'}¥${parseInt(record.amount).toLocaleString()/*←3桁カンマ区切りで表示*/}
-            </td>
-            <td>
-             <button class="delete-btn" onclick="deleteRecord(${record.id})">🗑</button>
-            </td>
-        `;
+
+        // 各セルを安全に作成
+        const tdDate = document.createElement('td');
+        tdDate.textContent = record.date;
+
+        const tdCategory = document.createElement('td');
+        tdCategory.textContent = record.category;
+
+        const tdDescription = document.createElement('td');
+        tdDescription.textContent = record.description;
+
+        const tdAmount = document.createElement('td');
+        tdAmount.className = record.type === 'income' ? 'amount-income' : 'amount-expense';
+        tdAmount.textContent = (record.type === 'income' ? '+' : '-') + '¥' + parseInt(record.amount).toLocaleString();
+
+        const tdDelete = document.createElement('td');
+        const deleteBtn = document.createElement('button');
+        deleteBtn.className = 'delete-btn';
+        deleteBtn.textContent = '🗑';
+        deleteBtn.addEventListener('click', function() {
+            deleteRecord(record.id);
+        });
+        tdDelete.appendChild(deleteBtn);
+
+        tr.appendChild(tdDate);
+        tr.appendChild(tdCategory);
+        tr.appendChild(tdDescription);
+        tr.appendChild(tdAmount);
+        tr.appendChild(tdDelete);
+
         recordList.appendChild(tr); // tbodyに追加して画面に表示
+    
     });
 
     // サマリーを更新
