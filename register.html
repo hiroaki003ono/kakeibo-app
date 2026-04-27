@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新規登録 - 家計簿アプリ</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+    <div class="auth-container">
+        <h1>家計簿アプリ</h1>
+
+        <!-- 新規登録フォーム -->
+        <div class="auth-box">
+            <h2>新規登録</h2>
+            <div class="form-group">
+                <label for="username">ユーザー名</label>
+                <input type="text" id="username" placeholder="ユーザー名を入力">
+            </div>
+            <div class="form-group">
+                <label for="password">パスワード</label>
+                <input type="password" id="password" placeholder="パスワードを入力">
+            </div>
+            <div class="form-group">
+                <label for="passwordConfirm">パスワード（確認）</label>
+                <input type="password" id="passwordConfirm" placeholder="パスワードを再入力">
+            </div>
+            <button id="registerBtn">登録する</button>
+            <p class="auth-link">アカウントをお持ちの方は<a href="login.html">ログイン</a></p>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+</body>
+</html>

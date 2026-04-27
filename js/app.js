@@ -149,3 +149,16 @@ function clearForm() {
     document.getElementById('amount').value = '';
     document.querySelector('input[name="type"][value="expense"]').checked = true;
 }
+
+// ログアウトボタンのイベント
+document.getElementById('logoutBtn').addEventListener('click', function() {
+    fetch('php/logout.php')
+    .then(function(response) {
+        return response.json();
+    })
+    .then(function(data) {
+        if (data.success) {
+            window.location.href    = 'login.html';
+        }
+    });
+});

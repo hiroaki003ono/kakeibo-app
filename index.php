@@ -1,3 +1,13 @@
+<?php
+session_start();
+
+// セッションチェック
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.html');
+    exist;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -11,6 +21,12 @@
 <body>
     <div class="container">
         <h1>家計簿アプリ</h1>
+
+        <!-- ログアウトボタン -->
+        <div class="header-bar">
+            <span>こんにちは、<?php echo htmlspecialchars($_SESSION['username'], ENT_QUOTES, 'UTF-8'); ?>さん</span>
+            <button id="logoutBtn">ログアウト</button>
+        </div>
 
         <!-- 入力フォーム -->
         <div class="form-section">
