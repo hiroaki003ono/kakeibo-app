@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
 // データベースの接続設定
 define('DB_HOST', 'localhost'); // 接続先サーバー（自分のPC）
 define('DB_USER', 'root'); // MySQLのユーザー名

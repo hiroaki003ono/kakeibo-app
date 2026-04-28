@@ -1,5 +1,4 @@
 <?php
-error_reporting(0);
 session_start();
 header('Content-Type: application/json'); // ブラウザに「このファイルはJSONを返します」と宣言している
 

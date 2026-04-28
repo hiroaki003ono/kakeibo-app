@@ -1,5 +1,4 @@
 <?php
-error_reporting(0);
 header('Content-Type: application/json');
 require_once 'db.php';
 require_once 'functions.php';
