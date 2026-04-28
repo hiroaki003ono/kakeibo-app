@@ -64,7 +64,7 @@ function renderCharts(records) {
     // 月別に収支・支出を集計
     const monthlyData = {};
     records.forEach(function(record) {
-        // 日付から年月を取得（例：20224-01-01 → 2024-01）
+        // 日付から年月を取得（例：20224-01-01 → 2024-01）substringで文字列の0~7を取り出している
         const month = record.date.substring(0, 7);
 
         if (!monthlyData[month]) {

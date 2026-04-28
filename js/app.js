@@ -1,3 +1,6 @@
+// CSRFトークンを取得
+const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
 // データを保持する配列
 let records = [];
 
@@ -44,6 +47,7 @@ addBtn.addEventListener('click', function() {
     formData.append('description', description);
     formData.append('amount', amount);
     formData.append('type', type);
+    formData.append('csrf_token', csrfToken); // CSRF対策
 
     fetch('php/add_record.php', {
         method: 'POST',
@@ -125,6 +129,7 @@ function render() {
 function deleteRecord(id) {
     const formData = new FormData();
     formData.append('id', id);
+    formData.append('csrf_token', csrfToken); // CSRF対策
 
     fetch('php/delete_record.php', {
         method: 'POST',

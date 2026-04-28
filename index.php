@@ -4,8 +4,14 @@ session_start();
 // セッションチェック
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.html');
-    exist;
+    exit;
 }
+
+// functionsを読み込む
+require_once 'php/functions.php';
+
+// CSRFトークンを生成
+$csrfToken  = generateCsrfToken();
 ?>
 
 <!DOCTYPE html>
@@ -15,6 +21,8 @@ if (!isset($_SESSION['user_id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>家計簿アプリ</title>
+    <!-- CSRFトークンをJavaScriptに渡す -->
+    <meta name="csrf-token" content="<?php echo h($csrfToken); ?>">
     <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -83,7 +91,7 @@ if (!isset($_SESSION['user_id'])) {
          <div class="chart-section">
             <h2>収支グラフ</h2>
             <div class="chart-container">
-                <div class=""chart-box>
+                <div class="chart-box">
                     <h3>カテゴリ別支出</h3>
                     <canvas id="categoryChart"></canvas>
                 </div>
@@ -118,6 +126,8 @@ if (!isset($_SESSION['user_id'])) {
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- 自分のJSファイルより前に読み込む -->
     <script src="js/chart.js"></script>
+    
+    <!-- CSRFトークンをJavaScriptに渡す -->
     <script src="js/app.js"></script>
 
 </body>

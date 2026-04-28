@@ -74,7 +74,7 @@ if (isRegisterPage) {
                 showMessage('登録完了！ログインページに移動します', 'success');
                 // 2秒後にログインページに移動
                 setTimeout(function() {
-                    window.location.href    = 'login.php';
+                    window.location.href    = 'login.html';
                 }, 2000);
             } else {
                 showMessage(data.message, 'error');
