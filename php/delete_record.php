@@ -1,5 +1,15 @@
 <?php
+error_reporting(0);
+session_start();
 header('Content-Type: application/json');
+require_once 'db.php';
+require_once 'functions.php';
+
+// CSRFトークンの検証
+if (!verifyCsrfToken($_POST['csrf_token'])) {
+    echo json_encode(['success' => false, 'message' => '不正なリクエストです']);
+    exit;
+}
 
 // db.phpを読み込む
 require_once 'db.php';

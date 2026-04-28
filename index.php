@@ -1,3 +1,19 @@
+<?php
+session_start();
+
+// セッションチェック
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.html');
+    exit;
+}
+
+// functionsを読み込む
+require_once 'php/functions.php';
+
+// CSRFトークンを生成
+$csrfToken  = generateCsrfToken();
+?>
+
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -5,12 +21,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>家計簿アプリ</title>
+    <!-- CSRFトークンをJavaScriptに渡す -->
+    <meta name="csrf-token" content="<?php echo h($csrfToken); ?>">
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
     <div class="container">
         <h1>家計簿アプリ</h1>
+
+        <!-- ログアウトボタン -->
+        <div class="header-bar">
+            <span>こんにちは、<?php echo htmlspecialchars($_SESSION['username'], ENT_QUOTES, 'UTF-8'); ?>さん</span>
+            <button id="logoutBtn">ログアウト</button>
+        </div>
 
         <!-- 入力フォーム -->
         <div class="form-section">
@@ -67,7 +91,7 @@
          <div class="chart-section">
             <h2>収支グラフ</h2>
             <div class="chart-container">
-                <div class=""chart-box>
+                <div class="chart-box">
                     <h3>カテゴリ別支出</h3>
                     <canvas id="categoryChart"></canvas>
                 </div>
@@ -102,6 +126,8 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- 自分のJSファイルより前に読み込む -->
     <script src="js/chart.js"></script>
+    
+    <!-- CSRFトークンをJavaScriptに渡す -->
     <script src="js/app.js"></script>
 
 </body>

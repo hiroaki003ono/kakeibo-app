@@ -1,0 +1,73 @@
+/* 認証ページ共通 */
+.auth-container {
+    max-width: 400px;
+    margin: 80px auto;
+    padding: 0 20px;
+    text-align: center;
+}
+
+.auth-container h1 {
+    font-size: 28px;
+    color: #2c3e50;
+    margin-bottom: 32px;
+}
+
+.auth-box {
+    background: #fff;
+    padding: 32px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.auth-box h2 {
+    background: center;
+    margin-bottom: 24px;
+    color: #2c3e50;
+}
+
+.auth-box button {
+    width: 100%;
+    padding: 12px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 8px;
+}
+
+.auth-box button:hover {
+    background-color: #2980b9;
+}
+
+.auth-link {
+    text-align: center;
+    margin-top: 16px;
+    font-size: 14px;
+    color: #888;
+}
+
+.auth-link a {
+    color: #3498db;
+    text-decoration: none;
+}
+
+.auth-link a:hover {
+    text-decoration: underline;
+}
+
+.error-message {
+    color: #e74c3c;
+    font-size: 14px;
+    margin-top: 8px;
+    text-align: center;
+}
+
+.success-message {
+    color: #27ae60;
+    font-size: 14px;
+    margin-top: 8px;
+    text-align: center;
+}

@@ -1,8 +1,18 @@
 <?php
+error_reporting(0);
+session_start();
 header('Content-Type: application/json'); // ブラウザに「このファイルはJSONを返します」と宣言している
 
 // db.phpを読み込む
 require_once 'db.php'; // require_onceで重複読み込みを防ぐ
+
+require_once 'functions.php';
+
+// CSRFトークンの検証
+if (!verifyCsrfToken($_POST['csrf_token'])) {
+    echo json_encode(['success' => false, 'message' => '不正なリクエストです']);
+    exit;
+}
 
 // POSTデータを取得
 $date           = $_POST['date'];

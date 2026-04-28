@@ -1,3 +1,6 @@
+// CSRFトークンを取得
+const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
 // データを保持する配列
 let records = [];
 
@@ -44,6 +47,7 @@ addBtn.addEventListener('click', function() {
     formData.append('description', description);
     formData.append('amount', amount);
     formData.append('type', type);
+    formData.append('csrf_token', csrfToken); // CSRF対策
 
     fetch('php/add_record.php', {
         method: 'POST',
@@ -67,8 +71,8 @@ function render() {
     recordList.innerHTML = '';
 
     // 合計を計算
-    let totalIncome = 0;
-    let totalExpense = 0;
+    let totalIncome     = 0;
+    let totalExpense    = 0;
 
     records.forEach(function(record) {
         if (record.type === 'income') {
@@ -77,20 +81,39 @@ function render() {
             totalExpense += parseInt(record.amount);
         }
 
-        // テーブルの行を作成
         const tr = document.createElement('tr');
-        tr.innerHTML = `
-            <td>${record.date}</td>
-            <td>${record.category}</td>
-            <td>${record.description}</td>
-            <td class="${record.type === 'income' ? 'amount-income' : 'amount-expense'}">
-             ${record.type === 'income' ? '+' : '-'}¥${parseInt(record.amount).toLocaleString()/*←3桁カンマ区切りで表示*/}
-            </td>
-            <td>
-             <button class="delete-btn" onclick="deleteRecord(${record.id})">🗑</button>
-            </td>
-        `;
+
+        // 各セルを安全に作成
+        const tdDate = document.createElement('td');
+        tdDate.textContent = record.date;
+
+        const tdCategory = document.createElement('td');
+        tdCategory.textContent = record.category;
+
+        const tdDescription = document.createElement('td');
+        tdDescription.textContent = record.description;
+
+        const tdAmount = document.createElement('td');
+        tdAmount.className = record.type === 'income' ? 'amount-income' : 'amount-expense';
+        tdAmount.textContent = (record.type === 'income' ? '+' : '-') + '¥' + parseInt(record.amount).toLocaleString();
+
+        const tdDelete = document.createElement('td');
+        const deleteBtn = document.createElement('button');
+        deleteBtn.className = 'delete-btn';
+        deleteBtn.textContent = '🗑';
+        deleteBtn.addEventListener('click', function() {
+            deleteRecord(record.id);
+        });
+        tdDelete.appendChild(deleteBtn);
+
+        tr.appendChild(tdDate);
+        tr.appendChild(tdCategory);
+        tr.appendChild(tdDescription);
+        tr.appendChild(tdAmount);
+        tr.appendChild(tdDelete);
+
         recordList.appendChild(tr); // tbodyに追加して画面に表示
+    
     });
 
     // サマリーを更新
@@ -106,6 +129,7 @@ function render() {
 function deleteRecord(id) {
     const formData = new FormData();
     formData.append('id', id);
+    formData.append('csrf_token', csrfToken); // CSRF対策
 
     fetch('php/delete_record.php', {
         method: 'POST',
@@ -130,3 +154,16 @@ function clearForm() {
     document.getElementById('amount').value = '';
     document.querySelector('input[name="type"][value="expense"]').checked = true;
 }
+
+// ログアウトボタンのイベント
+document.getElementById('logoutBtn').addEventListener('click', function() {
+    fetch('php/logout.php')
+    .then(function(response) {
+        return response.json();
+    })
+    .then(function(data) {
+        if (data.success) {
+            window.location.href    = 'login.html';
+        }
+    });
+});
