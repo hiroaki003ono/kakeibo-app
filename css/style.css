@@ -175,11 +175,13 @@ th {
 .chart-container {
     display: flex;
     gap: 24px;
+    overflow: hidden;
 }
 
 .chart-box {
     flex: 1;
     text-align: center;
+    min-width: 0;
 }
 
 .chart-box h3 {
