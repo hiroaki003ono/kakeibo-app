@@ -104,7 +104,15 @@ $csrfToken  = generateCsrfToken();
 
         <!-- 一覧表示 -->
         <div class="list-section">
-            <h2>収支一覧</h2>
+            <div class="list-header">
+                <h2>収支一覧</h2>
+                <div class="list-controls">
+                    <select id="monthFilter">
+                        <option value="">全て表示</option>
+                    </select>
+                    <button id="exportBtn">CSVエクスポート</button>
+                </div>
+            </div>
             <table>
                 <thead>
                     <tr>

@@ -10,6 +10,7 @@ const recordList        = document.getElementById('recordList'); // テーブル
 const totalIncomeEl     = document.getElementById('totalIncome'); // 収入合計表示欄
 const totalExpenseEl    = document.getElementById('totalExpense'); // 支出合計表示欄
 const balanceEl         = document.getElementById('balance'); // 残高表示欄
+const monthFilter       = document.getElementById('monthFilter'); // 月別フィルター
 
 // ページ読み込み時にDBからデータを取得
 loadRecords();
@@ -74,7 +75,20 @@ function render() {
     let totalIncome     = 0;
     let totalExpense    = 0;
 
-    records.forEach(function(record) {
+    // 選択された月を取得
+    const selectedMonth = monthFilter.value;
+
+    // 月でフィルタリング
+    const filteredRecords   = selectedMonth
+        ? records.filter(function(record) {
+            return record.date.substring(0, 7) === selectedMonth;
+        })
+        : records;
+
+    // 月選択のオプションを更新
+    updateMonthOptions();
+
+    filteredRecords.forEach(function(record) {
         if (record.type === 'income') {
             totalIncome += parseInt(record.amount);
         } else {
@@ -122,7 +136,36 @@ function render() {
     balanceEl.textContent = '¥' + (totalIncome - totalExpense).toLocaleString();
 
     // グラフを更新する
-    renderCharts(records);
+    renderCharts(filteredRecords);
+}
+
+// 月選択のオプションを更新する関数
+function updateMonthOptions() {
+    const currentValue  = monthFilter.value;
+
+    // 重複なしで月一覧を作成
+    const months    = [];
+    records.forEach(function(record) {
+        const month = record.date.substring(0, 7);
+        if (!months.includes(month)) {
+            months.push(month);
+        }
+    });
+
+    // 月を降順に並べる
+    months.sort().reverse();
+
+    // オプションを更新
+    monthFilter.innerHTML   = '<option value="">全て表示</option>';
+    months.forEach(function(month) {
+        const option        = document.createElement('option');
+        option.value        = month;
+        option.textContent  = month;
+        if (month === currentValue) {
+            option.selected = true;
+        }
+        monthFilter.appendChild(option);
+    });
 }
 
 // 削除する関数
@@ -166,4 +209,14 @@ document.getElementById('logoutBtn').addEventListener('click', function() {
             window.location.href    = 'login.html';
         }
     });
+});
+
+// CSVエクスポートボタンのイベント
+document.getElementById('exportBtn').addEventListener('click', function() {
+    window.location.href    = 'php/export_csv.php?csrf_token=' + csrfToken;
+});
+
+// 月フィルターのイベント
+monthFilter.addEventListener('change', function() {
+    render();
 });

@@ -175,11 +175,13 @@ th {
 .chart-container {
     display: flex;
     gap: 24px;
+    overflow: hidden;
 }
 
 .chart-box {
     flex: 1;
     text-align: center;
+    min-width: 0;
 }
 
 .chart-box h3 {
@@ -213,4 +215,45 @@ th {
 
 .header-bar button:hover {
     background-color: #c0392b;
+}
+
+/* 一覧ヘッダー */
+.list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.list-header h2 {
+    margin-bottom: 0;
+}
+
+#exportBtn {
+    padding: 8px 16px;
+    background-color: #27ae60;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor:pointer;
+}
+
+#exportBtn:hover {
+    background-color: #219a52;
+}
+
+/* 一覧コントロール */
+.list-controls {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+#monthFilter {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
 }
