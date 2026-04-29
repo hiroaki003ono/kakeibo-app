@@ -167,3 +167,8 @@ document.getElementById('logoutBtn').addEventListener('click', function() {
         }
     });
 });
+
+// CSVエクスポートボタンのイベント
+document.getElementById('exportBtn').addEventListener('click', function() {
+    window.location.href    = 'php/export_csv.php?csrf_token=' + csrfToken;
+});

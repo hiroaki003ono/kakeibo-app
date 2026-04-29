@@ -214,3 +214,29 @@ th {
 .header-bar button:hover {
     background-color: #c0392b;
 }
+
+/* 一覧ヘッダー */
+.list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.list-header h2 {
+    margin-bottom: 0;
+}
+
+#exportBtn {
+    padding: 8px 16px;
+    background-color: #27ae60;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor:pointer;
+}
+
+#exportBtn:hover {
+    background-color: #219a52;
+}

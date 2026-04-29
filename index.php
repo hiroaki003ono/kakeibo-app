@@ -104,7 +104,10 @@ $csrfToken  = generateCsrfToken();
 
         <!-- 一覧表示 -->
         <div class="list-section">
-            <h2>収支一覧</h2>
+            <div class="list-header">
+                <h2>収支一覧</h2>
+                <button id="exportBtn">CSVエクスポート</button>
+            <div>
             <table>
                 <thead>
                     <tr>
