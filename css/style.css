@@ -240,3 +240,18 @@ th {
 #exportBtn:hover {
     background-color: #219a52;
 }
+
+/* 一覧コントロール */
+.list-controls {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+#monthFilter {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+}
