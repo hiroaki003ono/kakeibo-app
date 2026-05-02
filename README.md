@@ -7,9 +7,10 @@
 
 - HTML / CSS
 - JavaScript
-- PHP
-- MySQL
+- PHP 8.3
+- MySQL 8.0
 - Chart.js
+- Docker
 
 ## 機能一覧
 
@@ -22,16 +23,16 @@
 - [x] MySQLによるデータの永続化
 - [x] カテゴリ別支出の円グラフ
 - [x] 月別収支の棒グラフ
+- [ ] 月別フィルター機能
 - [x] ユーザー登録・ログイン・ログアウト
 - [x] セッション管理
 - [x] XSS対策
 - [x] CSRF対策
 - [x] パスワードのハッシュ化
 - [x] CSVエクスポート機能
-- [x] 月別フィルター機能
+- [x] Docker環境の構築
 
 ### 実装予定
-- Dockerによる環境構築
 - AWSへのデプロイ
 
 ## 開発ログ
@@ -44,8 +45,41 @@
 | 2026-04-25 | フェーズ3：Chart.jsによるグラフ表示機能を実装 |
 | 2026-04-28 | フェーズ4：セキュリティ機能を実装 |
 | 2026-04-29 | フェーズ5：CSVエクスポート・月別フィルター機能を実装 |
+| 2026-05-02 | フェーズ5：Docker環境を構築 |
 
-## 実行方法
+## 環境構築
 
-MAMPを起動後、ブラウザで以下にアクセス
-http://localhost:8888/kakeibo-app/
+### Dockerを使う場合
+
+```bash
+git clone https://github.com/hiroaki003ono/kakeibo-app.git
+cd kakeibo-app
+docker-compose up -d
+```
+
+ブラウザで以下にアクセス
+- アプリ：http://localhost:8080
+- phpMyAdmin：http://localhost:8081
+
+### テーブルの作成
+
+phpMyAdminにログイン後、SQLタブから以下を実行してください。
+
+```sql
+CREATE TABLE users (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE records (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    date DATE NOT NULL,
+    category VARCHAR(50) NOT NULL,
+    description VARCHAR(255) NOT NULL,
+    amount INT UNSIGNED NOT NULL,
+    type VARCHAR(10) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
