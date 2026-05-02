@@ -1,11 +1,11 @@
 <?php
 error_reporting(0);
 // データベースの接続設定
-define('DB_HOST', 'localhost'); // 接続先サーバー（自分のPC）
+define('DB_HOST', 'db'); // docker-compose.ymlで定義したMySQLサービスの名前
 define('DB_USER', 'root'); // MySQLのユーザー名
 define('DB_PASS', 'root'); // MySQLのパスワード
 define('DB_NAME', 'kakeibo_db'); // 使用するデータベース名
-define('DB_PORT', '8889'); // MAMPのMySQLポート番号
+define('DB_PORT', '3306');
 
 // データベースに接続
 $pdo = new PDO(
