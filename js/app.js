@@ -213,7 +213,18 @@ document.getElementById('logoutBtn').addEventListener('click', function() {
 
 // CSVエクスポートボタンのイベント
 document.getElementById('exportBtn').addEventListener('click', function() {
-    window.location.href    = 'php/export_csv.php?csrf_token=' + csrfToken;
+    // 現在選択中の月を取得（空文字なら「全て表示」）
+    const selectedMonth = monthFilter.value;
+
+    // URLを組み立て
+    let url = 'php/export_csv.php?csrf_token=' + encodeURIComponent(csrfToken);
+
+    // 月が選択されていればクエリパラメータに追加
+    if (selectedMonth) {
+        url += '&month=' + encodeURIComponent(selectedMonth);
+    }
+
+    window.location.href    = url;
 });
 
 // 月フィルターのイベント
